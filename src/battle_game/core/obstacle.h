@@ -20,3 +20,5 @@ class Obstacle : public Object {
  protected:
 };
 }  // namespace battle_game
+
+//This comment is sponsored by my cat because he helped me in setting up environment
