@@ -139,8 +139,29 @@ void Drone_Tank::Fire() {
         auto velocity = Rotate(glm::vec2{0.0f, 20.0f}, turret_rotation_);
         GenerateBullet<bullet::CannonBall>(
             position_ + Rotate({0.0f, 1.2f}, turret_rotation_),
-            turret_rotation_, 0.15 * GetDamageScale(), velocity);
+            turret_rotation_, 0.1 * GetDamageScale(), velocity);
         fire_count_down_ = kTickPerSecond / 6;  // Fire 6 bullets per second.
+      }
+
+      if (input_data.key_down[GLFW_KEY_SPACE]) {
+        auto &units = game_core_->GetUnits();
+        for (auto &unit : units) {
+          if (unit.first == id_) {
+            continue;
+          }
+          if (unit.second->IsHit(position_)) {
+            auto velocity = Rotate(glm::vec2{0.0f, 20.0f}, turret_rotation_);
+            GenerateBullet<bullet::CannonBall>(
+                position_,
+                turret_rotation_, 10 * GetDamageScale(), velocity);
+          }
+        }
+
+        game_core_->PushEventGenerateParticle<particle::Smoke>(
+            position_, rotation_, game_core_->RandomInCircle() * 2.0f, 0.2f,
+            glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}, 3.0f);
+        
+        game_core_->PushEventDealDamage(id_, id_, 100.0f);
       }
     }
   }
