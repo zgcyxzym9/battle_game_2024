@@ -148,6 +148,7 @@ void Drone_Tank::Fire() {
         fire_count_down_ = kTickPerSecond / 6;  // Fire 6 bullets per second.
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
       if (input_data.key_down[GLFW_KEY_SPACE]) {
         auto &units = game_core_->GetUnits();
@@ -168,6 +169,8 @@ void Drone_Tank::Fire() {
 
         game_core_->PushEventDealDamage(id_, id_, 100.0f);
       }
+=======
+>>>>>>> parent of 7de4421 (finish implementing drone tank detonating, coarse and using bullets)
 =======
 >>>>>>> parent of 7de4421 (finish implementing drone tank detonating, coarse and using bullets)
     }
