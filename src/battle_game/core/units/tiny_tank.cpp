@@ -102,11 +102,6 @@ void Tank::TankMove(float move_speed, float rotate_angular_speed) {
         position_ + glm::vec2{glm::rotate(glm::mat4{1.0f}, rotation_,
                                           glm::vec3{0.0f, 0.0f, 1.0f}) *
                               glm::vec4{offset, 0.0f, 0.0f}};
-
-    if (game_core_->IsOutOfRange(new_position)) {
-      game_core_->PushEventDealDamage(id_, id_, 100.f);
-    }
-
     if (!game_core_->IsBlockedByObstacles(new_position)) {
       game_core_->PushEventMoveUnit(id_, new_position);
     }

@@ -102,11 +102,6 @@ void Drone_Tank::TankMove(float move_speed, float rotate_angular_speed) {
         position_ + glm::vec2{glm::rotate(glm::mat4{1.0f}, rotation_,
                                           glm::vec3{0.0f, 0.0f, 1.0f}) *
                               glm::vec4{offset, 0.0f, 0.0f}};
-
-    if (game_core_->IsOutOfRange(new_position)) {
-      game_core_->PushEventDealDamage(id_, id_, 100.f);
-    }
-
     if (!game_core_->IsBlockedByObstacles(new_position)) {
       game_core_->PushEventMoveUnit(id_, new_position);
     }
@@ -156,15 +151,16 @@ void Drone_Tank::Fire() {
           }
           if (unit.second->IsHit(position_)) {
             auto velocity = Rotate(glm::vec2{0.0f, 20.0f}, turret_rotation_);
-            GenerateBullet<bullet::CannonBall>(position_, turret_rotation_,
-                                               10 * GetDamageScale(), velocity);
+            GenerateBullet<bullet::CannonBall>(
+                position_,
+                turret_rotation_, 10 * GetDamageScale(), velocity);
           }
         }
 
         game_core_->PushEventGenerateParticle<particle::Smoke>(
             position_, rotation_, game_core_->RandomInCircle() * 2.0f, 0.2f,
             glm::vec4{0.0f, 0.0f, 0.0f, 1.0f}, 3.0f);
-
+        
         game_core_->PushEventDealDamage(id_, id_, 100.0f);
       }
     }
