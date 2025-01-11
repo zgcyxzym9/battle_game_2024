@@ -144,8 +144,8 @@ void Drone_Tank::Fire() {
         auto velocity = Rotate(glm::vec2{0.0f, 20.0f}, turret_rotation_);
         GenerateBullet<bullet::CannonBall>(
             position_ + Rotate({0.0f, 1.2f}, turret_rotation_),
-            turret_rotation_, 0.15 * GetDamageScale(), velocity);
-        fire_count_down_ = kTickPerSecond / 6;  // Fire 6 bullets per second.
+            turret_rotation_, GetDamageScale(), velocity);
+        fire_count_down_ = kTickPerSecond;  // Fire interval 1 second.
       }
 <<<<<<< HEAD
 <<<<<<< HEAD
